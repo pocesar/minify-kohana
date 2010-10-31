@@ -174,7 +174,7 @@ class Minify {
         $options = $controller->setupSources($options);
         $options = $controller->analyzeSources($options);
         self::$_options = $controller->mixInDefaultOptions($options);
-        
+
         // check request validity
         if (! $controller->sources) {
             // invalid request!
@@ -197,7 +197,6 @@ class Minify {
             self::_setupDebug($controller->sources);
             self::$_options['maxAge'] = 0;
         }
-        
         // determine encoding
         if (self::$_options['encodeOutput']) {
             $sendVary = true;
@@ -248,7 +247,6 @@ class Minify {
             $headers = $cg->getHeaders();
             unset($cg);
         }
-        
         if (self::$_options['contentType'] === self::TYPE_CSS
             && self::$_options['rewriteCssUris']) {
             reset($controller->sources);
@@ -261,7 +259,7 @@ class Minify {
                 }
             }
         }
-        
+
         // check server cache
         if (null !== self::$_cache && ! self::$_options['debug']) {
             // using cache

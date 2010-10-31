@@ -62,6 +62,7 @@ class Minify_CSS {
                 ,array($options)
             );
         }
+        
         if (! isset($options['currentDir']) && ! isset($options['prependRelativePath'])) {
             return $css;
         }

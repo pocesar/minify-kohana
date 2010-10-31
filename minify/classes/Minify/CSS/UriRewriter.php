@@ -54,7 +54,7 @@ class Minify_CSS_UriRewriter {
         );
         self::$_currentDir = self::_realpath($currentDir);
         self::$_symlinks = array();
-        
+
         // normalize symlinks
         foreach ($symlinks as $link => $target) {
             $link = ($link === '//')
@@ -63,14 +63,14 @@ class Minify_CSS_UriRewriter {
             $link = strtr($link, '/', DIRECTORY_SEPARATOR);
             self::$_symlinks[$link] = self::_realpath($target);
         }
-        
+
         self::$debugText .= "docRoot    : " . self::$_docRoot . "\n"
                           . "currentDir : " . self::$_currentDir . "\n";
         if (self::$_symlinks) {
             self::$debugText .= "symlinks : " . var_export(self::$_symlinks, 1) . "\n";
         }
         self::$debugText .= "\n";
-        
+
         $css = self::_trimUrls($css);
         
         // rewrite
@@ -221,6 +221,8 @@ class Minify_CSS_UriRewriter {
         
         // "unresolve" a symlink back to doc root
         foreach ($symlinks as $link => $target) {
+            self::$debugText .= print_r(array('link' => $link, 'path' => $path, 'target' => $target), true)."\n";
+            
             if (0 === strpos($path, $target)) {
                 // replace $target with $link
                 $path = $link . substr($path, strlen($target));
@@ -230,6 +232,7 @@ class Minify_CSS_UriRewriter {
                 break;
             }
         }
+        
         // strip doc root
         $path = substr($path, strlen($realDocRoot));
         

@@ -2,15 +2,23 @@
 
 return array(
   'uploaderHoursBehind' => 0,
-  'symlinks' => array(),
   'serveOptions' => array(
     'maxAge' => 1800,
     'bubbleCssImports' => false,
     'minApp' => array(
-      'groupsOnly' => false
-    )
+      'groupsOnly' => false,
+      'allowDirs' => array(),
+    ),
+    'preserveComments' => true,
+    'rewriteCssUris' => true,
+    'currentDir' => false,
+  ),
+  'quiet' => false,
+  'symlinks' => array(
+    '/'.substr(Kohana::$base_url, 0, -1) => DOCROOT
   ),
   'errorLogger' => true,
+  'rewriteCssUris' => false,
   'allowDebugFlag' => false,
   'cachePath' => APPPATH.'cache/minify',
   'documentRoot' => '',

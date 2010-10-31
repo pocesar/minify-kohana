@@ -24,7 +24,7 @@ class Controller_minify_index extends Controller {
     foreach ($config['symlinks'] as $uri => $target) {
         $config['serveOptions']['minApp']['allowDirs'][] = $target;
     }
-
+    
     if ($config['allowDebugFlag']) {
         if (! empty($_COOKIE['minDebug'])) {
             foreach (preg_split('/\\s+/', $_COOKIE['minDebug']) as $debugUri) {
@@ -59,7 +59,7 @@ class Controller_minify_index extends Controller {
         // well need groups config
         $config['serveOptions']['minApp']['groups'] = $config['groupsConfig'];
     }
-
+    
     if (isset($_GET['f']) || isset($_GET['g'])) {
         // serve!   
         Minify::serve('MinApp', $config['serveOptions']);
