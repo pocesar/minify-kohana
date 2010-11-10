@@ -15,7 +15,7 @@ return array(
   ),
   'quiet' => false,
   'symlinks' => array(
-    '/'.substr(Kohana::$base_url, 0, -1) => (Kohana::$base_url != '/'?DOCROOT:'/') // In case you're running it inside a subfolder, this is needed
+    '/'.substr(Kohana::$base_url, 0, -1) => (Kohana::$base_url != '/'?DOCROOT:'/')
   ),
   'errorLogger' => true,
   'rewriteCssUris' => false,

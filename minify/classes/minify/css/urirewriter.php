@@ -223,7 +223,7 @@ class Minify_CSS_UriRewriter {
         foreach ($symlinks as $link => $target) {
             self::$debugText .= print_r(array('link' => $link, 'path' => $path, 'target' => $target), true)."\n";
             
-            if (0 === strpos($path, $target)) {
+            if ($target && $path && 0 === strpos($path, $target)) {
                 // replace $target with $link
                 $path = $link . substr($path, strlen($target));
                 
