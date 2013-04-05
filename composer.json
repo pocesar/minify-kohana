@@ -1,0 +1,10 @@
+{
+	"name": "kohana-modules/minify",
+	"type": "kohana-module",
+	"description": "Minify module for Kohana 3.x",
+	"keywords": ["kohana","minify","javascript","stylesheet","js","css"],
+	"require": {
+		"php": ">=5.2",
+		"composer/installers": "*"
+	}
+}
