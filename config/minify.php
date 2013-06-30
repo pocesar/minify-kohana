@@ -19,7 +19,8 @@ return array(
   ),
   'quiet' => false,
   'symlinks' => array(
-	  '/' . substr(Kohana::$base_url, 0, -1) => (Kohana::$base_url !== '/' ? DOCROOT : '/')
+	  /* uncomment this if you are working on a directory instead of a domain like 127.0.0.1/kohana/ */
+	  //'/' . substr(Kohana::$base_url, 0, -1) => DOCROOT 
   ),
   'errorLogger' => true,
   'rewriteCssUris' => false,
