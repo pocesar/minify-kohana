@@ -61,11 +61,9 @@ class Controller_Minify_Index extends Controller {
 			set_time_limit(0);
 			// serve!
 			$serveController = new Minify_Controller_MinApp();
-			$response = Minify::serve($serveController, array('quiet' => true) + $config['serveOptions']);
-
-			$this->response->headers($response['headers']);
-			$this->response->body($response['content']);
-			$this->response->status($response['statusCode']);
+			$response = Minify::serve($serveController, $config['serveOptions']);
+			
+			exit;
 		}
 	}
 }
