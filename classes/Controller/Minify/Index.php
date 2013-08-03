@@ -1,71 +1,61 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-class Controller_Minify_Index extends Controller {
+abstract class Controller_Minify_Index extends Controller {
 
-	function action_minify()
+	public function action_index()
 	{
-		$config = Kohana::$config->load('minify');
+		extract(Kohana::$config->load('minify')->as_array(), EXTR_SKIP);
 
-		if ($this->request->param('group') !== NULL)
+		if ($this->request->param('group'))
 		{
 			$_GET['g'] = $this->request->param('group');
 		}
 
-		Minify::$uploaderHoursBehind = $config['uploaderHoursBehind'];
-		Minify::setCache(
-			isset($config['cachePath']) ? $config['cachePath'] : ''
-			, $config['cacheFileLocking']
-		);
+		Minify::$uploaderHoursBehind = $uploaderHoursBehind;
+		Minify::setCache(isset($cachePath) ? $cachePath : '', $cacheFileLocking);
 
-		if ($config['documentRoot'])
+		if ($documentRoot)
 		{
-			$_SERVER['DOCUMENT_ROOT'] = $config['documentRoot'];
-			Minify::$isDocRootSet = true;
+			$_SERVER['DOCUMENT_ROOT'] = $documentRoot;
+			Minify::$isDocRootSet = TRUE;
 		}
 
-		$config['serveOptions']['minifierOptions']['text/css']['symlinks'] = $config['symlinks'];
-		// auto-add targets to allowDirs
-		foreach ($config['symlinks'] as $uri => $target)
+		$serveOptions['minifierOptions']['text/css']['symlinks'] = $symlinks;
+		$serveOptions['minApp']['allowDirs'] += array_values($symlinks);
+
+		if ($allowDebugFlag)
 		{
-			$config['serveOptions']['minApp']['allowDirs'][] = $target;
+			$serveOptions['debug'] = Minify_DebugDetector::shouldDebugRequest($_COOKIE, $_GET, $_SERVER['REQUEST_URI']);
 		}
 
-		if ($config['allowDebugFlag'])
+		if ($errorLogger)
 		{
-			$config['serveOptions']['debug'] = Minify_DebugDetector::shouldDebugRequest($_COOKIE, $_GET, $_SERVER['REQUEST_URI']);
-		}
-
-		if ($config['errorLogger'])
-		{
-			if (true === $config['errorLogger'])
+			if (TRUE === $errorLogger)
 			{
-				$config['errorLogger'] = FirePHP::getInstance(true);
+				$errorLogger = FirePHP::getInstance(TRUE);
 			}
-			Minify_Logger::setLogger($config['errorLogger']);
+			Minify_Logger::setLogger($errorLogger);
 		}
 
-		// check for URI versioning
+		// Check for URI versioning
 		if (preg_match('/&\\d/', $_SERVER['QUERY_STRING']))
 		{
-			$config['serveOptions']['maxAge'] = 31536000;
+			$serveOptions['maxAge'] = 31536000;
 		}
 
 		if (isset($_GET['g']))
 		{
-			// well need groups config
-			$config['serveOptions']['minApp']['groups'] = $config['groupsConfig'];
+			// Well need groups config
+			$serveOptions['minApp']['groups'] = $groupsConfig;
 		}
 
-		if (isset($_GET['f']) || isset($_GET['g']))
+		if (isset($_GET['f']) OR isset($_GET['g']))
 		{
 			set_time_limit(0);
-			// serve!
-			$serveController = new Minify_Controller_MinApp();
-			$response = Minify::serve($serveController, array('quiet' => true) + $config['serveOptions']);
-
-			$this->response->headers($response['headers']);
-			$this->response->body($response['content']);
-			$this->response->status($response['statusCode']);
+			// Serve!
+			$response = Minify::serve(new Minify_Controller_MinApp(), array('quiet' => TRUE) + $serveOptions);
+			$this->response->headers($response['headers'])->body($response['content'])->status($response['statusCode']);
 		}
 	}
-}
+	
+} // End Controller_Minify
