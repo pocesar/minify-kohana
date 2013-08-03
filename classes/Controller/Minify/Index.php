@@ -58,6 +58,7 @@ class Controller_Minify_Index extends Controller {
 
 		if (isset($_GET['f']) || isset($_GET['g']))
 		{
+			set_time_limit(0);
 			// serve!
 			$serveController = new Minify_Controller_MinApp();
 			$response = Minify::serve($serveController, array('quiet' => true) + $config['serveOptions']);
