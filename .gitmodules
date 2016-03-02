@@ -1,4 +1,4 @@
 [submodule "vendor/minify"]
 	path = vendor/minify
-	url = git://github.com/mrclay/minify
-    branch = 2.x
+	url = git@github.com:mrclay/minify.git
+	branch = 2.x

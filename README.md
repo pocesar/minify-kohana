@@ -1,13 +1,13 @@
 For Kohana 3.2, use the 3.2 branch, the only thing that changes is the case on the filenames
 
-It's a Minify module (has been heavily modified to fit kohana auto-loading style, structure and code wise) based on the best minifier for PHP imho > https://github.com/mrclay/minify
+It's a Minify module based on the best minifier for PHP imho > https://github.com/mrclay/minify
 Extract the contents to 'modules' folder, enable it in the bootstrap:
 
 ```html
   Kohana::modules(array(
     'minify' => MODPATH.'minify', // Minify
   ));
-``` 
+```
 
 and the only thing you need to do actually, is to create a subfolder on 'application/cache' called minify, and you're ready to go (otherwise you'll get problems with the file cache).
 Call it in your HTML files like:
@@ -19,7 +19,7 @@ Call it in your HTML files like:
 #### Don't forget to copy the file `modules/minify/config/minify.php` to your applications folder in `application/config/minify.php`
 ##### Don't make modifications inside the modules folder
 
-It's already configured with a route called minify, that maps to '/min', and if you don't want to output what is your js or 
+It's already configured with a route called minify, that maps to '/min', and if you don't want to output what is your js or
 css folder, you can use groups, by specifying it in your `/application/config/minify.php` file:
 
 ### in PHP:
@@ -53,6 +53,6 @@ css folder, you can use groups, by specifying it in your `/application/config/mi
 
 ### Debugging
 
-Append `?debug=1` to your `min/` URL, it will show you what's going on in your file. 
+Append `?debug=1` to your `min/` URL, it will show you what's going on in your file.
 
 Have fun!
